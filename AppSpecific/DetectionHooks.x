@@ -60,14 +60,6 @@ static BOOL tinder_bypass_active(void) {
     if(!tinder_bypass_active()) return %orig;
     return NO;
 }
-- (BOOL)isSubstrateLoaded {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isDebuggerPresent {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
 %end
 
 %hook TNDRDeviceIntegrity
@@ -140,40 +132,6 @@ static BOOL tinder_bypass_active(void) {
 - (BOOL)hasDeviceEverSignedIn {
     if(!tinder_bypass_active()) return %orig;
     return NO;
-}
-%end
-
-%hook TNDRFingerprintCollector
-- (NSString *)persistentDeviceID {
-    if(!tinder_bypass_active()) return %orig;
-    ContainerContext *ctx = [ContainerContext shared];
-    return ctx.containerId ?: @"tinder-default-0000-0000-0000-000000000000";
-}
-- (NSDictionary *)deviceFingerprint {
-    if(!tinder_bypass_active()) return %orig;
-    ContainerContext *ctx = [ContainerContext shared];
-    return @{@"device_id": ctx.containerId ?: @"default", @"verified": @YES};
-}
-%end
-
-%hook TNDRAuth
-- (NSDate *)authTokenExpiration {
-    if(!tinder_bypass_active()) return %orig;
-    return [NSDate distantFuture];
-}
-%end
-
-%hook TNDRGeolocation
-- (void)setLatLng:(id)coords {
-    if(!tinder_bypass_active()) { %orig; return; }
-    %orig;
-}
-%end
-
-%hook TNDRPhoneVerification
-- (BOOL)isVerified {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
 }
 %end
 
