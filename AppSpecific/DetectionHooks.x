@@ -9,254 +9,105 @@ static BOOL tinder_bypass_active(void) {
 %group andromeda_tinder
 
 %hook TNDRUser
-- (BOOL)isBanned {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isShadowBanned {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isSuspended {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isBlocked {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
+- (BOOL)isBanned { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isShadowBanned { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isSuspended { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isBlocked { return tinder_bypass_active() ? NO : %orig; }
 %end
 
 %hook TNDRSecurityManager
-- (BOOL)isDeviceCompromised {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isDeviceJailbroken {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isDeviceRooted {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isJailbroken {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isRooted {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isSafeEnvironment {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
-- (BOOL)hasTamperedBinaries {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isRuntimePatched {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isSubstrateLoaded {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isDebuggerPresent {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
+- (BOOL)isDeviceCompromised { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isDeviceJailbroken { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isDeviceRooted { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isJailbroken { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isRooted { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isSafeEnvironment { return tinder_bypass_active() ? YES : %orig; }
+- (BOOL)hasTamperedBinaries { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isRuntimePatched { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isSubstrateLoaded { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isDebuggerPresent { return tinder_bypass_active() ? NO : %orig; }
 %end
 
 %hook TNDRDeviceIntegrity
-- (BOOL)checkIntegrity {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
-- (BOOL)isTampered {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)hasSuspiciousLibraries {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isEmulator {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)validateAppSignature {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
-- (BOOL)isRuntimePatched {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isInjected {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)hasJailbreakFiles {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
+- (BOOL)checkIntegrity { return tinder_bypass_active() ? YES : %orig; }
+- (BOOL)isTampered { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)hasSuspiciousLibraries { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isEmulator { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)validateAppSignature { return tinder_bypass_active() ? YES : %orig; }
+- (BOOL)isRuntimePatched { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isInjected { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)hasJailbreakFiles { return tinder_bypass_active() ? NO : %orig; }
 %end
 
 %hook TNDRAppIntegrity
-- (BOOL)isValid {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
-- (BOOL)isTampered {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isSignatureValid {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
-- (BOOL)checkCodeSignature {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
-- (BOOL)validateCodeSignature {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
+- (BOOL)isValid { return tinder_bypass_active() ? YES : %orig; }
+- (BOOL)isTampered { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isSignatureValid { return tinder_bypass_active() ? YES : %orig; }
+- (BOOL)checkCodeSignature { return tinder_bypass_active() ? YES : %orig; }
+- (BOOL)validateCodeSignature { return tinder_bypass_active() ? YES : %orig; }
 %end
 
 %hook TNDRMetaManager
-- (BOOL)hasBannedDevice {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isDeviceBlacklisted {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)hasDeviceEverSignedIn {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
+- (BOOL)hasBannedDevice { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isDeviceBlacklisted { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)hasDeviceEverSignedIn { return tinder_bypass_active() ? NO : %orig; }
 %end
 
 %hook TNDRFingerprintCollector
 - (NSString *)persistentDeviceID {
     if(!tinder_bypass_active()) return %orig;
-    ContainerContext *ctx = [ContainerContext shared];
-    return ctx.containerId ?: @"tinder-device-0000-0000-0000-000000000000";
+    return [[ContainerContext shared] containerId] ?: @"tinder-default-0000-0000-0000-000000000000";
 }
 - (NSDictionary *)deviceFingerprint {
     if(!tinder_bypass_active()) return %orig;
-    return @{@"device_id": [self persistentDeviceID], @"verified": @YES};
+    ContainerContext *ctx = [ContainerContext shared];
+    return @{@"device_id": ctx.containerId ?: @"default", @"verified": @YES};
 }
 %end
 
 %hook TNDRAuth
-- (NSString *)refreshToken {
-    return %orig;
-}
 - (NSDate *)authTokenExpiration {
-    if(!tinder_bypass_active()) return %orig;
-    return [NSDate distantFuture];
+    return tinder_bypass_active() ? [NSDate distantFuture] : %orig;
 }
 %end
 
 %hook TNDRGeolocation
 - (void)setLatLng:(id)coords {
     if(!tinder_bypass_active()) { %orig; return; }
-    ContainerContext *ctx = [ContainerContext shared];
-    if(ctx.latitude != 0 && ctx.longitude != 0) {
-        %orig;
-        return;
-    }
     %orig;
 }
 %end
 
 %hook TNDRPhoneVerification
 - (BOOL)isVerified {
-    if(!tinder_bypass_active()) return %orig;
-    return YES;
-}
-- (void)verifyWithCode:(NSString *)code completion:(id)completion {
-    if(!tinder_bypass_active()) { %orig; return; }
-    %orig;
+    return tinder_bypass_active() ? YES : %orig;
 }
 %end
 
 %hook IOSSecuritySuite
-+ (BOOL)amIJailbroken {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)amIReverseEngineered {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)amIDebugged {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)amIProxied {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)amIManipulated {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
++ (BOOL)amIJailbroken { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)amIReverseEngineered { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)amIDebugged { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)amIProxied { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)amIManipulated { return tinder_bypass_active() ? NO : %orig; }
 + (BOOL)amIJailbrokenWithFailMessage:(id *)msg {
     if(!tinder_bypass_active()) return %orig;
     if(msg) *msg = @"";
     return NO;
 }
-+ (NSString *)deviceIdiomString {
-    if(!tinder_bypass_active()) return %orig;
-    return @"iPhone";
-}
-+ (NSArray *)amIAttachedToDebugger {
-    if(!tinder_bypass_active()) return %orig;
-    return @[];
-}
++ (NSString *)deviceIdiomString { return tinder_bypass_active() ? @"iPhone" : %orig; }
++ (NSArray *)amIAttachedToDebugger { return tinder_bypass_active() ? @[] : %orig; }
 %end
 
 %hook flutter_jailbreak_detection
-+ (BOOL)isJailBroken {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)isDebugged {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)isJailbroken {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isJailbroken {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)checkForJailbreak {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)checkForJailbreak {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-+ (BOOL)isDeviceModified {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
-- (BOOL)isDeviceModified {
-    if(!tinder_bypass_active()) return %orig;
-    return NO;
-}
++ (BOOL)isJailBroken { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)isDebugged { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)isJailbroken { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isJailbroken { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)checkForJailbreak { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)checkForJailbreak { return tinder_bypass_active() ? NO : %orig; }
++ (BOOL)isDeviceModified { return tinder_bypass_active() ? NO : %orig; }
+- (BOOL)isDeviceModified { return tinder_bypass_active() ? NO : %orig; }
 %end
 
 %end
