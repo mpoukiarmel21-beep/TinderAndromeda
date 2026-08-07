@@ -2,8 +2,6 @@
 #import <UIKit/UIKit.h>
 #import "ContainerContext.h"
 
-%config(generator=internal)
-
 static BOOL tinder_bypass_active(void) {
     return [[ContainerContext shared] bypassActive];
 }
