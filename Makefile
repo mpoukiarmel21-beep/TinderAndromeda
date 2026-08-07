@@ -4,7 +4,12 @@ THEOS_PACKAGE_SCHEME = rootless
 
 include $(THEOS)/makefiles/common.mk
 
-SHARED_DIR = $(CURDIR)/../AndromedaProject/Shared
+SHARED_REPO ?= $(CURDIR)/../shared
+ifeq ($(wildcard $(SHARED_REPO)/Shared),)
+  SHARED_REPO := $(CURDIR)/../AndromedaProject
+endif
+
+SHARED_DIR = $(SHARED_REPO)/Shared
 
 TWEAK_NAME = TinderAndromeda
 TinderAndromeda_FILES = AppSpecific/DetectionHooks.x \
@@ -24,7 +29,7 @@ TinderAndromeda_FILES = AppSpecific/DetectionHooks.x \
     $(SHARED_DIR)/UI/GhostPanel.m \
     $(SHARED_DIR)/UI/GPSMapView.m \
     $(SHARED_DIR)/Utils/IDGenerator.m
-TinderAndromeda_CFLAGS = -I$(SHARED_DIR)/Core -I$(SHARED_DIR)/Ghost -I$(SHARED_DIR)/GPS -I$(SHARED_DIR)/Container -I$(SHARED_DIR)/UI -I$(SHARED_DIR)/Utils -I$(CURDIR)/../AndromedaProject -I$(CURDIR)/AppSpecific -fobjc-arc -Wno-unguarded-availability -Wno-deprecated-declarations
+TinderAndromeda_CFLAGS = -I$(SHARED_DIR)/Core -I$(SHARED_DIR)/Ghost -I$(SHARED_DIR)/GPS -I$(SHARED_DIR)/Container -I$(SHARED_DIR)/UI -I$(SHARED_DIR)/Utils -I$(SHARED_REPO) -I$(CURDIR)/AppSpecific -fobjc-arc -Wno-unguarded-availability -Wno-deprecated-declarations
 TinderAndromeda_FRAMEWORKS = UIKit CoreLocation MapKit Security CoreTelephony
 TinderAndromeda_LIBRARIES = substrate
 TinderAndromeda_INSTALL_PATH = /Library/MobileSubstrate/DynamicLibraries
