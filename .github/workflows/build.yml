@@ -36,6 +36,17 @@ jobs:
         working-directory: tinder
         run: make package FINALPACKAGE=1
 
+      - name: Fix substrate path
+        run: |
+          DYLIB="tinder/.theos/obj/arm64/TinderAndromeda.dylib"
+          echo "Before:"
+          otool -L "$DYLIB" | grep -i substrate || true
+          # Change substrate reference to @rpath for bundled framework
+          install_name_tool -change /usr/lib/libsubstrate.dylib @rpath/CydiaSubstrate.framework/CydiaSubstrate "$DYLIB" 2>/dev/null || true
+          install_name_tool -change /Library/Frameworks/CydiaSubstrate.framework/CydiaSubstrate @rpath/CydiaSubstrate.framework/CydiaSubstrate "$DYLIB" 2>/dev/null || true
+          echo "After:"
+          otool -L "$DYLIB" | grep -i substrate || true
+
       - name: Upload dylib
         uses: actions/upload-artifact@v4
         with:
