@@ -135,6 +135,43 @@ static BOOL tinder_bypass_active(void) {
 }
 %end
 
+%hook TNDRFingerprintCollector
+- (NSString *)persistentDeviceID {
+    if(!tinder_bypass_active()) return %orig;
+    NSString *cid = [[ContainerContext shared] containerId];
+    if(cid) return cid;
+    return @"tinder-default-device-id";
+}
+- (NSDictionary *)deviceFingerprint {
+    if(!tinder_bypass_active()) return %orig;
+    return @{};
+}
+%end
+
+%hook TNDRAuth
+- (NSDate *)authTokenExpiration {
+    if(!tinder_bypass_active()) return %orig;
+    return [NSDate distantFuture];
+}
+%end
+
+%hook TNDRGeolocation
+- (void)setLatLng:(id)coords {
+    if(!tinder_bypass_active()) {
+        %orig;
+        return;
+    }
+    %orig;
+}
+%end
+
+%hook TNDRPhoneVerification
+- (BOOL)isVerified {
+    if(!tinder_bypass_active()) return %orig;
+    return YES;
+}
+%end
+
 %hook IOSSecuritySuite
 + (BOOL)amIJailbroken {
     if(!tinder_bypass_active()) return %orig;
