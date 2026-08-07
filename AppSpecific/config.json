@@ -1,0 +1,17 @@
+{
+    "bundleId": "com.cardify.tinder",
+    "name": "Tinder",
+    "detectionClasses": [
+        "TNDRUser",
+        "TNDRSecurityManager",
+        "TNDRDeviceIntegrity",
+        "TNDRAppIntegrity",
+        "TNDRMetaManager",
+        "TNDRFingerprintCollector",
+        "TNDRAuth",
+        "TNDRGeolocation",
+        "TNDRPhoneVerification",
+        "IOSSecuritySuite",
+        "flutter_jailbreak_detection"
+    ]
+}

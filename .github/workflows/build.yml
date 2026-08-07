@@ -1,0 +1,51 @@
+name: Build TinderAndromeda
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: tinder
+
+      - uses: actions/checkout@v4
+        with:
+          repository: mpoukiarmel21-beep/AndromedaProject
+          path: shared
+
+      - name: Setup Theos
+        run: |
+          git clone --recursive https://github.com/theos/theos.git /tmp/theos
+          echo "THEOS=/tmp/theos" >> $GITHUB_ENV
+          brew install ldid
+          SDK_PATH=$(xcrun --sdk iphoneos --show-sdk-path)
+          SDK_VERSION=$(xcrun --sdk iphoneos --show-sdk-version)
+          mkdir -p /tmp/theos/sdks
+          ln -sf "$SDK_PATH" "/tmp/theos/sdks/iPhoneOS${SDK_VERSION}.sdk"
+
+      - name: Build
+        working-directory: tinder
+        run: make package FINALPACKAGE=1
+
+      - name: Upload dylib
+        uses: actions/upload-artifact@v4
+        with:
+          name: TinderAndromeda
+          path: tinder/.theos/obj/arm64/TinderAndromeda.dylib
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          files: tinder/.theos/obj/arm64/TinderAndromeda.dylib
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

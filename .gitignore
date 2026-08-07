@@ -1,0 +1,9 @@
+*.deb
+packages/
+.theos/
+*.swp
+*.swo
+*~
+.DS_Store
+IPA/*.ipa
+!IPA/.gitkeep

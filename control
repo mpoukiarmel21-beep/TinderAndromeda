@@ -1,0 +1,8 @@
+Package: com.tinderandromeda.rel
+Name: TinderAndromeda
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: Tinder with container system, Ghost device spoofing, GPS 3D, and jailbreak bypass. Multi-account support via isolated containers.
+Maintainer: AndromedaTeam
+Author: AndromedaTeam
+Section: Tweaks
